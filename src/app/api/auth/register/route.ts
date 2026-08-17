@@ -93,7 +93,12 @@ export async function POST(request: Request) {
     });
 
     return response;
-  } catch {
-    return jsonError("Erro ao cadastrar empresa", 500);
-  }
+ } catch (error) {
+  console.error("ERRO NO CADASTRO:", error);
+
+  return jsonError(
+    error instanceof Error ? error.message : "Erro ao cadastrar empresa",
+    500
+  );
+}
 }
