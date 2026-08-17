@@ -1,0 +1,31 @@
+# Regras de Design
+
+## Objetivo
+
+Reproduzir o layout fornecido com fidelidade mínima de 98%.
+
+## Não fazer
+
+- Não alterar cores
+- Não alterar espaçamentos
+- Não alterar tamanhos dos cards
+- Não substituir ícones
+- Não reinterpretar o layout
+
+## Sidebar
+
+- Largura fixa 240px
+- Fundo escuro
+- Dashboard selecionado em vermelho
+
+## Cards
+
+- Border radius 16px
+- Fundo #0F1324
+- Borda rgba(255,255,255,0.08)
+
+## Gráficos
+
+- Linha vermelha
+- Fundo escuro
+- Manter proporções da referência
