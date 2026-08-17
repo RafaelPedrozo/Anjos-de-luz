@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cores */
+  --color-background: #0b0b0f;
+  --color-surface: #16161a;
+  --color-card: #0f1324;
+  --color-list-item: #16161d;
+
+  --color-primary: #e60023;
+  --color-primary-hover: #cc001f;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #949494;
+  --color-text-muted: #a0a0a0;
+
+  --color-success: #00c853;
+  --color-success-muted: #10b981;
+  --color-warning: #f97316;
+
+  --color-purple: #8b5cf6;
+  --color-pink: #ec4899;
+  --color-gray-chart: #6b7280;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+
+  --color-sidebar-active: #e60023;
+  --color-sidebar-active-glow: rgba(230, 0, 35, 0.25);
+
+  /* Espaçamento */
+  --spacing-sidebar: 240px;
+  --spacing-header: 88px;
+  --spacing-content: 32px;
+
+  /* Border radius */
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-sidebar-item: 12px;
+  --radius-tag: 8px;
+
+  /* Sombras */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-primary-card: 0 8px 32px rgba(230, 0, 35, 0.3);
+  --shadow-sidebar-active: 0 4px 16px rgba(230, 0, 35, 0.25);
+
+  /* Tipografia */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar escura */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
