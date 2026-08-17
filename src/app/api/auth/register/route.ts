@@ -9,7 +9,7 @@ import { jsonError } from "@/lib/api/helpers";
 const registerSchema = z.object({
   razaoSocial: z.string().min(2),
   nomeFantasia: z.string().min(2),
-  cnpj: z.string().min(14),
+  cnpj: z.string().min(1, "CNPJ é obrigatório"),
   telefone: z.string().optional(),
   email: z.string().email(),
   endereco: z.string().optional(),
@@ -29,6 +29,9 @@ export async function POST(request: Request) {
 
     const data = parsed.data;
     const cnpj = data.cnpj.replace(/\D/g, "");
+    if (cnpj.length !== 14) {
+  return jsonError("CNPJ deve conter 14 números");
+}
     const adminEmail = data.adminEmail.toLowerCase();
 
     const existingCnpj = await prisma.empresa.findUnique({ where: { cnpj } });
