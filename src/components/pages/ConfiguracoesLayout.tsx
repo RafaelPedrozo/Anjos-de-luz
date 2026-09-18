@@ -7,7 +7,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/utils";
 
 const sections = [
-  { id: "empresa", label: "Dados da empresa", href: "/configuracoes" },
+  { id: "empresa", label: "Dados da ONG", href: "/configuracoes" },
   { id: "usuarios", label: "Usuários", href: "/configuracoes/usuarios", adminOnly: true },
   { id: "seguranca", label: "Segurança", href: "/configuracoes/seguranca" },
   { id: "aparencia", label: "Aparência", href: "/configuracoes/aparencia" },
@@ -36,8 +36,8 @@ export function ConfiguracoesLayout({ children }: ConfiguracoesLayoutProps) {
               className={cn(
                 "rounded-[var(--radius-button)] px-4 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-white",
+                  ? "bg-[var(--color-primary)] text-[var(--color-on-primary)]"
+                  : "text-[var(--color-text-secondary)] hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]",
               )}
             >
               {section.label}

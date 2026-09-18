@@ -37,9 +37,17 @@ function describeArc(
 
 interface ExpensesChartProps {
   categories: ExpenseCategory[];
+  title?: string;
+  subtitle?: string;
+  emptyLabel?: string;
 }
 
-export function ExpensesChart({ categories }: ExpensesChartProps) {
+export function ExpensesChart({
+  categories,
+  title = "Doações",
+  subtitle = "Por tipo",
+  emptyLabel = "Sem doações",
+}: ExpensesChartProps) {
   const total = categories.reduce((sum, item) => sum + item.value, 0);
   let currentAngle = 0;
   const gap = 2;
@@ -62,15 +70,15 @@ export function ExpensesChart({ categories }: ExpensesChartProps) {
   return (
     <Card className="flex flex-col p-6">
       <div className="mb-4">
-        <h2 className="text-lg font-semibold text-white">Despesas</h2>
+        <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">{title}</h2>
         <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
-          Por categoria
+          {subtitle}
         </p>
       </div>
 
       <div className="mx-auto flex h-[180px] w-[180px] items-center justify-center">
         {slices.length === 0 ? (
-          <p className="text-sm text-[var(--color-text-secondary)]">Sem despesas</p>
+          <p className="text-sm text-[var(--color-text-secondary)]">{emptyLabel}</p>
         ) : (
           <svg
             width={SIZE}
@@ -88,7 +96,7 @@ export function ExpensesChart({ categories }: ExpensesChartProps) {
       <ul className="mt-4 flex flex-col gap-3">
         {categories.length === 0 ? (
           <li className="text-sm text-[var(--color-text-secondary)]">
-            Nenhuma despesa neste mês
+            Nenhuma doação neste mês
           </li>
         ) : (
           categories.map((item) => (
@@ -102,7 +110,7 @@ export function ExpensesChart({ categories }: ExpensesChartProps) {
                   {item.name}
                 </span>
               </div>
-              <span className="shrink-0 text-sm font-medium text-white">
+              <span className="shrink-0 text-sm font-medium text-[var(--color-text-primary)]">
                 R$ {item.value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </span>
             </li>

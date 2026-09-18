@@ -5,17 +5,12 @@ import { hashPassword } from "@/lib/auth/password";
 import { signToken } from "@/lib/auth/jwt";
 import { AUTH_COOKIE } from "@/lib/auth/constants";
 import { jsonError } from "@/lib/api/helpers";
+import { ONG_PADRAO } from "@/lib/ong";
 
 const registerSchema = z.object({
-  razaoSocial: z.string().min(2),
-  nomeFantasia: z.string().min(2),
-  cnpj: z.string().min(1, "CNPJ é obrigatório"),
-  telefone: z.string().optional(),
-  email: z.string().email(),
-  endereco: z.string().optional(),
-  adminNome: z.string().min(2),
-  adminEmail: z.string().email(),
-  adminSenha: z.string().min(6),
+  nome: z.string().min(2, "Informe o nome"),
+  email: z.string().email("E-mail inválido"),
+  senha: z.string().min(6, "A senha deve ter no mínimo 6 caracteres"),
 });
 
 export async function POST(request: Request) {
@@ -27,61 +22,55 @@ export async function POST(request: Request) {
       return jsonError(parsed.error.issues[0]?.message ?? "Dados inválidos");
     }
 
-    const data = parsed.data;
-    const cnpj = data.cnpj.replace(/\D/g, "");
-    if (cnpj.length !== 14) {
-  return jsonError("CNPJ deve conter 14 números");
-}
-    const adminEmail = data.adminEmail.toLowerCase();
+    const nome = parsed.data.nome.trim();
+    const email = parsed.data.email.toLowerCase();
 
-    const existingCnpj = await prisma.empresa.findUnique({ where: { cnpj } });
-    if (existingCnpj) {
-      return jsonError("CNPJ já cadastrado");
-    }
-
-    const existingEmail = await prisma.usuario.findUnique({ where: { email: adminEmail } });
+    const existingEmail = await prisma.usuario.findUnique({ where: { email } });
     if (existingEmail) {
       return jsonError("E-mail já cadastrado");
     }
 
-    const senhaHash = await hashPassword(data.adminSenha);
+    let ong = await prisma.empresa.findFirst({
+      orderBy: { criadoEm: "asc" },
+    });
 
-    const result = await prisma.$transaction(async (tx) => {
-      const empresa = await tx.empresa.create({
+    if (!ong) {
+      ong = await prisma.empresa.create({
         data: {
-          razaoSocial: data.razaoSocial,
-          nomeFantasia: data.nomeFantasia,
-          cnpj,
-          telefone: data.telefone,
-          email: data.email.toLowerCase(),
-          endereco: data.endereco,
+          razaoSocial: ONG_PADRAO.razaoSocial,
+          nomeFantasia: ONG_PADRAO.nomeFantasia,
+          cnpj: ONG_PADRAO.cnpj,
+          telefone: ONG_PADRAO.telefone,
+          email: ONG_PADRAO.email,
+          endereco: ONG_PADRAO.endereco,
         },
       });
+    }
 
-      const usuario = await tx.usuario.create({
-        data: {
-          nome: data.adminNome,
-          email: adminEmail,
-          senhaHash,
-          perfil: "ADMINISTRADOR",
-          empresaId: empresa.id,
-        },
-      });
+    const usuariosNaOng = await prisma.usuario.count({ where: { empresaId: ong.id } });
+    const senhaHash = await hashPassword(parsed.data.senha);
 
-      return { empresa, usuario };
+    const usuario = await prisma.usuario.create({
+      data: {
+        nome,
+        email,
+        senhaHash,
+        perfil: usuariosNaOng === 0 ? "ADMINISTRADOR" : "FUNCIONARIO",
+        empresaId: ong.id,
+      },
     });
 
     const token = await signToken({
-      sub: result.usuario.id,
-      empresaId: result.empresa.id,
-      perfil: result.usuario.perfil,
-      nome: result.usuario.nome,
-      email: result.usuario.email,
+      sub: usuario.id,
+      empresaId: ong.id,
+      perfil: usuario.perfil,
+      nome: usuario.nome,
+      email: usuario.email,
     });
 
     const response = NextResponse.json({
-      empresa: { id: result.empresa.id, nomeFantasia: result.empresa.nomeFantasia },
-      user: { id: result.usuario.id, nome: result.usuario.nome, email: result.usuario.email },
+      ong: { id: ong.id, nomeFantasia: ong.nomeFantasia },
+      user: { id: usuario.id, nome: usuario.nome, email: usuario.email, perfil: usuario.perfil },
     });
 
     response.cookies.set(AUTH_COOKIE, token, {
@@ -93,12 +82,12 @@ export async function POST(request: Request) {
     });
 
     return response;
- } catch (error) {
-  console.error("ERRO NO CADASTRO:", error);
+  } catch (error) {
+    console.error("ERRO NO CADASTRO:", error);
 
-  return jsonError(
-    error instanceof Error ? error.message : "Erro ao cadastrar empresa",
-    500
-  );
-}
+    return jsonError(
+      error instanceof Error ? error.message : "Erro ao cadastrar usuário",
+      500,
+    );
+  }
 }

@@ -56,9 +56,9 @@ export function ConfiguracoesEmpresaPage() {
   return (
     <ConfiguracoesLayout>
       <Card className="p-6">
-        <h2 className="text-lg font-semibold text-white">Dados da empresa</h2>
+        <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Dados da ONG</h2>
         <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
-          Informações cadastrais da organização
+          Informações cadastrais da ONG Anjos de Luz
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 grid grid-cols-2 gap-4">

@@ -19,11 +19,11 @@ export function Button({
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-[var(--radius-button)] px-4 py-2.5 text-sm font-medium transition-colors duration-150",
         variant === "primary" &&
-          "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)]",
+          "bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:bg-[var(--color-primary-hover)]",
         variant === "secondary" &&
-          "border border-[var(--color-border)] bg-white/5 text-[var(--color-text-secondary)] hover:bg-white/10 hover:text-white",
+          "border border-[var(--color-border)] bg-[var(--color-hover)] text-[var(--color-text-secondary)] hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]",
         variant === "ghost" &&
-          "text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-white",
+          "text-[var(--color-text-secondary)] hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]",
         className,
       )}
       {...props}
@@ -50,7 +50,7 @@ export function Input({ label, className, id, ...props }: InputProps) {
       <input
         id={inputId}
         className={cn(
-          "w-full rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]/50",
+          "w-full rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none transition-colors placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]",
           className,
         )}
         {...props}
@@ -77,7 +77,7 @@ export function Select({ label, options, className, id, ...props }: SelectProps)
       <select
         id={selectId}
         className={cn(
-          "w-full rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none transition-colors focus:border-[var(--color-primary)]/50",
+          "w-full rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none transition-colors focus:border-[var(--color-primary)]",
           className,
         )}
         {...props}
@@ -109,7 +109,7 @@ export function Textarea({ label, className, id, ...props }: TextareaProps) {
       <textarea
         id={textareaId}
         className={cn(
-          "min-h-[88px] w-full resize-y rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]/50",
+          "min-h-[88px] w-full resize-y rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none transition-colors placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]",
           className,
         )}
         {...props}

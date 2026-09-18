@@ -64,8 +64,8 @@ export function RelatoriosPage() {
 
   const entradasSaidasComparativo = useMemo(() => {
     return [
-      { label: "Entradas", value: exportData.entradasMes, color: "#00C853" },
-      { label: "Saídas", value: exportData.saidasMes, color: "#E60023" },
+      { label: "Doações", value: exportData.entradasMes, color: "#2F453A" },
+      { label: "Custos de resgate", value: exportData.saidasMes, color: "#F4A261" },
     ];
   }, [exportData.entradasMes, exportData.saidasMes]);
 
@@ -83,7 +83,7 @@ export function RelatoriosPage() {
     setExporting(true);
     try {
       const csv = buildRelatorioCsv(exportData);
-      downloadCsv(`viaconeta-relatorio-${year}-${month}.csv`, csv);
+      downloadCsv(`anjos-de-luz-relatorio-${year}-${month}.csv`, csv);
     } finally {
       setExporting(false);
     }
@@ -95,7 +95,7 @@ export function RelatoriosPage() {
         <select
           value={month}
           onChange={(e) => setPeriod(e.target.value, year)}
-          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none"
+          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none"
         >
           {monthOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-[var(--color-card)]">
@@ -106,7 +106,7 @@ export function RelatoriosPage() {
         <select
           value={year}
           onChange={(e) => setPeriod(month, e.target.value)}
-          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none"
+          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none"
         >
           {yearOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-[var(--color-card)]">
@@ -118,13 +118,13 @@ export function RelatoriosPage() {
           type="date"
           value={periodStart}
           onChange={(e) => setPeriodStart(e.target.value)}
-          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none"
+          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none"
         />
         <input
           type="date"
           value={periodEnd}
           onChange={(e) => setPeriodEnd(e.target.value)}
-          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none"
+          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none"
         />
         <FilterButton label="Período personalizado" />
         <div className="ml-auto">
@@ -152,7 +152,7 @@ export function RelatoriosPage() {
 
           <div className="grid grid-cols-2 gap-5">
             <Card className="p-6">
-              <h2 className="text-lg font-semibold text-white">Entradas x Saídas</h2>
+              <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Doações x Resgates</h2>
               <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
                 Comparativo do mês atual
               </p>
@@ -165,7 +165,7 @@ export function RelatoriosPage() {
                         {formatCurrency(item.value)}
                       </span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-white/5">
+                    <div className="h-2 overflow-hidden rounded-full bg-[var(--color-hover)]">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -180,7 +180,7 @@ export function RelatoriosPage() {
             </Card>
 
             <Card className="p-6">
-              <h2 className="text-lg font-semibold text-white">Evolução Mensal</h2>
+              <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Evolução Mensal</h2>
               <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">Últimos 6 meses</p>
               <div className="mt-6 flex h-[180px] items-end justify-between gap-2">
                 {cashFlowData.map((m) => (
@@ -209,24 +209,24 @@ export function RelatoriosPage() {
               <div className="mt-4 flex gap-4 text-xs">
                 <span className="flex items-center gap-1.5 text-[var(--color-text-secondary)]">
                   <span className="h-2 w-2 rounded-full bg-[var(--color-success)]" />
-                  Entradas
+                  Doações
                 </span>
                 <span className="flex items-center gap-1.5 text-[var(--color-text-secondary)]">
                   <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-                  Saídas
+                  Custos
                 </span>
               </div>
             </Card>
           </div>
 
           <Card className="p-6">
-            <h2 className="text-lg font-semibold text-white">Ranking de Categorias</h2>
+            <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Doações por tipo</h2>
             <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
-              Maiores despesas por categoria no mês
+              PIX e cartão no mês
             </p>
             {expenseCategories.length === 0 ? (
               <p className="mt-6 text-sm text-[var(--color-text-secondary)]">
-                Nenhuma despesa neste mês
+                Nenhuma doação neste mês
               </p>
             ) : (
               <ul className="mt-6 flex flex-col gap-3">
@@ -235,15 +235,15 @@ export function RelatoriosPage() {
                     key={item.name}
                     className="flex items-center gap-4 rounded-[10px] bg-[var(--color-list-item)] px-4 py-3.5"
                   >
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--color-hover)] text-xs font-bold text-[var(--color-text-primary)]">
                       {index + 1}
                     </span>
                     <span
                       className="h-2.5 w-2.5 shrink-0 rounded-full"
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="min-w-0 flex-1 truncate text-sm text-white">{item.name}</span>
-                    <span className="shrink-0 text-sm font-semibold text-white">
+                    <span className="min-w-0 flex-1 truncate text-sm text-[var(--color-text-primary)]">{item.name}</span>
+                    <span className="shrink-0 text-sm font-semibold text-[var(--color-text-primary)]">
                       {formatCurrency(item.value)}
                     </span>
                   </li>

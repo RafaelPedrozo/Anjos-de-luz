@@ -28,8 +28,8 @@ async function main() {
 
     const info = await transport.sendMail({
       from: process.env.SMTP_FROM ?? user,
-      to: "teste@viaconeta.com.br",
-      subject: "ViaConeta — Teste Mailtrap",
+      to: "teste@anjosdeluz.org",
+      subject: "Anjos de Luz — Teste Mailtrap",
       text: "Se aparecer na inbox do Mailtrap, está funcionando.",
       html: "<p>Se aparecer na inbox do Mailtrap, está funcionando.</p>",
     });

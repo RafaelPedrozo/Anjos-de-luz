@@ -4,14 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  ArrowDownLeft,
-  ArrowUpRight,
-  CreditCard,
+  PawPrint,
+  HeartHandshake,
+  HandCoins,
   BarChart3,
-  Users,
   Settings,
   ChevronDown,
-  DollarSign,
+  Heart,
   LogOut,
 } from "lucide-react";
 import { navigationItems } from "@/lib/design-system";
@@ -24,11 +23,10 @@ import { useState } from "react";
 
 const navIcons: Record<NavItemId, LucideIcon> = {
   dashboard: LayoutDashboard,
-  entradas: ArrowDownLeft,
-  saidas: ArrowUpRight,
-  "contas-a-pagar": CreditCard,
+  animais: PawPrint,
+  adocoes: HeartHandshake,
+  doacoes: HandCoins,
   relatorios: BarChart3,
-  clientes: Users,
   configuracoes: Settings,
 };
 
@@ -44,11 +42,13 @@ export function Sidebar() {
     >
       <div className="flex items-center gap-3 px-6 pt-8 pb-6">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)]">
-          <DollarSign size={20} strokeWidth={2.5} className="text-white" />
+          <Heart size={20} strokeWidth={2.5} className="text-[var(--color-on-primary)]" />
         </div>
         <div className="min-w-0">
-          <p className="truncate text-base font-bold leading-tight text-white">ViaConeta</p>
-          <p className="truncate text-xs text-[var(--color-text-muted)]">Gestão Financeira</p>
+          <p className="truncate text-base font-bold leading-tight text-[var(--color-on-surface)]">
+            Anjos de Luz
+          </p>
+          <p className="truncate text-xs text-[var(--color-on-surface)]/70">Controle da ONG</p>
         </div>
       </div>
 
@@ -68,8 +68,8 @@ export function Sidebar() {
                   className={cn(
                     "flex items-center gap-3 py-3 text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[var(--color-sidebar-active)] pl-7 pr-4 text-white shadow-[var(--shadow-sidebar-active)] rounded-r-[var(--radius-sidebar-item)]"
-                      : "rounded-[var(--radius-sidebar-item)] px-4 text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]",
+                      ? "bg-[var(--color-sidebar-active)] pl-7 pr-4 text-[var(--color-on-primary)] shadow-[var(--shadow-sidebar-active)] rounded-r-[var(--radius-sidebar-item)]"
+                      : "rounded-[var(--radius-sidebar-item)] px-4 text-[var(--color-on-surface)]/75 hover:bg-white/10 hover:text-[var(--color-on-surface)]",
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
@@ -86,17 +86,19 @@ export function Sidebar() {
         <button
           type="button"
           onClick={() => setMenuOpen(!menuOpen)}
-          className="flex w-full items-center gap-3 rounded-[var(--radius-button)] px-2 py-2 transition-colors duration-150 hover:bg-white/5"
+          className="flex w-full items-center gap-3 rounded-[var(--radius-button)] px-2 py-2 transition-colors duration-150 hover:bg-white/10"
           aria-label="Menu do usuário"
         >
           <Avatar initials={user?.initials ?? "??"} size="md" />
           <div className="min-w-0 flex-1 text-left">
-            <p className="truncate text-sm font-medium text-white">{user?.nome ?? "..."}</p>
-            <p className="truncate text-xs text-[var(--color-text-secondary)]">
+            <p className="truncate text-sm font-medium text-[var(--color-on-surface)]">
+              {user?.nome ?? "..."}
+            </p>
+            <p className="truncate text-xs text-[var(--color-on-surface)]/70">
               {user?.perfilLabel ?? ""}
             </p>
           </div>
-          <ChevronDown size={16} className="shrink-0 text-[var(--color-text-secondary)]" />
+          <ChevronDown size={16} className="shrink-0 text-[var(--color-on-surface)]/70" />
         </button>
 
         {menuOpen && (
@@ -104,7 +106,7 @@ export function Sidebar() {
             <button
               type="button"
               onClick={() => logout()}
-              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-white"
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
             >
               <LogOut size={16} />
               Sair

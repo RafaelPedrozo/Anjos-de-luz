@@ -25,7 +25,7 @@ function SummaryCardMenu() {
   return (
     <button
       type="button"
-      className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-white"
+      className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
       aria-label="Mais opções"
     >
       <MoreVertical size={16} strokeWidth={1.75} />
@@ -58,23 +58,23 @@ export function SummaryCards({ cards }: SummaryCardsProps) {
             <Card
               key={card.id}
               variant="primary"
-              className="relative flex min-h-[168px] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#E60023] to-[#CC001F] p-6"
+              className="relative flex min-h-[168px] flex-col justify-between overflow-hidden bg-gradient-to-br from-[#F4A261] to-[#E08A45] p-6"
             >
               <div className="flex items-start justify-between">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-                  <DollarSign size={20} strokeWidth={2} className="text-white" />
+                  <DollarSign size={20} strokeWidth={2} className="text-[var(--color-text-primary)]" />
                 </div>
-                <span className="rounded-[var(--radius-tag)] bg-white/20 px-2.5 py-1 text-xs font-medium text-white">
+                <span className="rounded-[var(--radius-tag)] bg-white/20 px-2.5 py-1 text-xs font-medium text-[var(--color-text-primary)]">
                   {card.badge}
                 </span>
               </div>
 
               <div>
-                <p className="text-sm text-white/80">{card.label}</p>
-                <p className="mt-1 text-[28px] font-bold leading-tight text-white">
+                <p className="text-sm text-[var(--color-text-primary)]/80">{card.label}</p>
+                <p className="mt-1 text-[28px] font-bold leading-tight text-[var(--color-text-primary)]">
                   {card.value}
                 </p>
-                <p className="mt-2 flex items-center gap-1 text-xs text-white/90">
+                <p className="mt-2 flex items-center gap-1 text-xs text-[var(--color-text-primary)]/90">
                   {card.trendDirection === "up" ? (
                     <ArrowUpRight size={14} strokeWidth={2} />
                   ) : (
@@ -113,7 +113,7 @@ export function SummaryCards({ cards }: SummaryCardsProps) {
 
               <div>
                 <p className="text-sm text-[var(--color-text-secondary)]">{card.label}</p>
-                <p className="mt-1 text-[28px] font-bold leading-tight text-white">
+                <p className="mt-1 text-[28px] font-bold leading-tight text-[var(--color-text-primary)]">
                   {card.value}
                 </p>
                 <p className={cn("mt-2 flex items-center gap-1 text-xs font-medium", trendColor)}>
@@ -146,7 +146,7 @@ export function SummaryCards({ cards }: SummaryCardsProps) {
 
               <div>
                 <p className="text-sm text-[var(--color-text-secondary)]">{card.label}</p>
-                <p className="mt-1 text-[28px] font-bold leading-tight text-white">
+                <p className="mt-1 text-[28px] font-bold leading-tight text-[var(--color-text-primary)]">
                   {card.value}
                 </p>
                 <p className="mt-2 text-xs text-[var(--color-text-secondary)]">

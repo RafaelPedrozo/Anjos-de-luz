@@ -1,9 +1,9 @@
 export const rankingCategorias = [
-  { name: "Fornecedores", value: 18500, color: "#E60023" },
-  { name: "Salários", value: 12000, color: "#F97316" },
-  { name: "Vendas", value: 9800, color: "#00C853" },
-  { name: "Aluguel", value: 5500, color: "#8B5CF6" },
-  { name: "Marketing", value: 3500, color: "#EC4899" },
+  { name: "Fornecedores", value: 18500, color: "#F4A261" },
+  { name: "Salários", value: 12000, color: "#E08A45" },
+  { name: "Vendas", value: 9800, color: "#2F453A" },
+  { name: "Aluguel", value: 5500, color: "#3D5A4C" },
+  { name: "Marketing", value: 3500, color: "#C45C26" },
 ];
 
 export const evolucaoMensal = [
@@ -16,6 +16,6 @@ export const evolucaoMensal = [
 ];
 
 export const entradasSaidasComparativo = [
-  { label: "Entradas", value: 67000, color: "#00C853" },
-  { label: "Saídas", value: 45000, color: "#E60023" },
+  { label: "Entradas", value: 67000, color: "#2F453A" },
+  { label: "Saídas", value: 45000, color: "#F4A261" },
 ];

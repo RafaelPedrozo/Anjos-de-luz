@@ -1,44 +1,36 @@
 /**
- * Design tokens — ViaConeta
- * Valores extraídos de rules.txt e referências em design/
+ * Design tokens — Anjos de Luz
  */
 
 export const colors = {
-  /** Fundo principal da aplicação */
-  background: "#0B0B0F",
-  /** Fundo da sidebar e superfícies elevadas */
-  surface: "#16161A",
-  /** Fundo de cards (rules.txt) */
-  card: "#0F1324",
-  /** Itens de lista dentro de cards */
-  listItem: "#16161D",
+  background: "#FFF8F0",
+  surface: "#2F453A",
+  card: "#FFFFFF",
+  listItem: "#FFF3E6",
 
-  /** Acento primário — item ativo, CTAs, branding */
-  primary: "#E60023",
-  primaryHover: "#CC001F",
+  primary: "#F4A261",
+  primaryHover: "#E08A45",
+  onPrimary: "#2F453A",
+  onSurface: "#FFF8F0",
 
-  /** Texto */
-  textPrimary: "#FFFFFF",
-  textSecondary: "#949494",
-  textMuted: "#A0A0A0",
+  textPrimary: "#2F453A",
+  textSecondary: "#5C7268",
+  textMuted: "#8A9A93",
 
-  /** Status */
-  success: "#00C853",
-  successMuted: "#10B981",
-  warning: "#F97316",
-  danger: "#E60023",
+  success: "#2F453A",
+  successMuted: "#3D5A4C",
+  warning: "#F4A261",
+  danger: "#C45C26",
 
-  purple: "#8B5CF6",
-  pink: "#EC4899",
-  grayChart: "#6B7280",
+  purple: "#2F453A",
+  pink: "#E08A45",
+  grayChart: "#8A9A93",
 
-  /** Bordas (rules.txt) */
-  border: "rgba(255, 255, 255, 0.08)",
-  borderSubtle: "rgba(255, 255, 255, 0.05)",
+  border: "rgba(47, 69, 58, 0.14)",
+  borderSubtle: "rgba(47, 69, 58, 0.08)",
 
-  /** Sidebar item ativo */
-  sidebarActive: "#E60023",
-  sidebarActiveGlow: "rgba(230, 0, 35, 0.25)",
+  sidebarActive: "#F4A261",
+  sidebarActiveGlow: "rgba(244, 162, 97, 0.35)",
 } as const;
 
 export const spacing = {
@@ -53,7 +45,6 @@ export const spacing = {
 } as const;
 
 export const radius = {
-  /** Cards (rules.txt) */
   card: "16px",
   button: "12px",
   sidebarItem: "12px",
@@ -87,9 +78,9 @@ export const typography = {
 } as const;
 
 export const shadows = {
-  card: "0 4px 24px rgba(0, 0, 0, 0.4)",
-  primaryCard: "0 8px 32px rgba(230, 0, 35, 0.3)",
-  sidebarActive: "0 4px 16px rgba(230, 0, 35, 0.25)",
+  card: "0 4px 24px rgba(47, 69, 58, 0.08)",
+  primaryCard: "0 8px 32px rgba(244, 162, 97, 0.35)",
+  sidebarActive: "0 4px 16px rgba(244, 162, 97, 0.35)",
 } as const;
 
 export const transitions = {
@@ -100,11 +91,10 @@ export const transitions = {
 
 export type NavItemId =
   | "dashboard"
-  | "entradas"
-  | "saidas"
-  | "contas-a-pagar"
+  | "animais"
+  | "adocoes"
+  | "doacoes"
   | "relatorios"
-  | "clientes"
   | "configuracoes";
 
 export interface NavItem {
@@ -115,11 +105,10 @@ export interface NavItem {
 
 export const navigationItems: NavItem[] = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },
-  { id: "entradas", label: "Entradas", href: "/entradas" },
-  { id: "saidas", label: "Saídas", href: "/saidas" },
-  { id: "contas-a-pagar", label: "Contas a Pagar", href: "/contas-a-pagar" },
+  { id: "animais", label: "Animais & Resgates", href: "/animais" },
+  { id: "adocoes", label: "Adoções", href: "/adocoes" },
+  { id: "doacoes", label: "Doações de Dinheiro", href: "/doacoes" },
   { id: "relatorios", label: "Relatórios", href: "/relatorios" },
-  { id: "clientes", label: "Clientes", href: "/clientes" },
   { id: "configuracoes", label: "Configurações", href: "/configuracoes" },
 ];
 

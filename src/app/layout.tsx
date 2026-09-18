@@ -4,8 +4,8 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ViaConeta — Gestão Financeira",
-  description: "Sistema de gestão financeira",
+  title: "Anjos de Luz — Controle da ONG",
+  description: "Sistema de controle de animais, resgates, adoções e doações da ONG Anjos de Luz",
 };
 
 export default function RootLayout({

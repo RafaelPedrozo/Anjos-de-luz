@@ -3,12 +3,14 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { DollarSign } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Card } from "@/components/ui";
 import { Button, Input } from "@/components/ui/form";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 export function LoginPage() {
   const router = useRouter();
+  const { refresh } = useAuth();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") ?? "/dashboard";
 
@@ -35,6 +37,7 @@ export function LoginPage() {
         return;
       }
 
+      await refresh();
       router.push(redirect);
       router.refresh();
     } catch {
@@ -49,16 +52,16 @@ export function LoginPage() {
       <div className="w-full max-w-md">
         <div className="mb-8 flex flex-col items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)]">
-            <DollarSign size={24} strokeWidth={2.5} className="text-white" />
+            <Heart size={24} strokeWidth={2.5} className="text-[var(--color-on-primary)]" />
           </div>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-white">ViaConeta</h1>
-            <p className="text-sm text-[var(--color-text-secondary)]">Gestão Financeira</p>
+            <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">Anjos de Luz</h1>
+            <p className="text-sm text-[var(--color-text-secondary)]">Controle de animais, resgates, adoções e doações</p>
           </div>
         </div>
 
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-white">Entrar</h2>
+          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Entrar</h2>
           <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
             Acesse sua conta para continuar
           </p>
@@ -82,7 +85,7 @@ export function LoginPage() {
             />
 
             {error && (
-              <p className="rounded-[var(--radius-button)] bg-[var(--color-primary)]/10 px-3 py-2 text-sm text-[var(--color-primary)]">
+              <p className="rounded-[var(--radius-button)] bg-[var(--color-primary)]/15 px-3 py-2 text-sm text-[var(--color-text-primary)]">
                 {error}
               </p>
             )}
@@ -94,8 +97,8 @@ export function LoginPage() {
 
           <p className="mt-6 text-center text-sm text-[var(--color-text-secondary)]">
             Não tem conta?{" "}
-            <Link href="/cadastro" className="font-medium text-[var(--color-primary)] hover:underline">
-              Cadastrar empresa
+            <Link href="/cadastro" className="font-medium text-[var(--color-primary-hover)] hover:underline">
+              Cadastrar usuário
             </Link>
           </p>
         </Card>

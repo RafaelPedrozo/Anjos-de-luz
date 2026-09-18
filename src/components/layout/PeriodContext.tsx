@@ -11,7 +11,7 @@ import {
 } from "react";
 import { monthOptions } from "@/data/shared";
 
-const STORAGE_KEY = "viaconeta-period";
+const STORAGE_KEY = "anjosdeluz-period";
 
 interface PeriodState {
   month: string;

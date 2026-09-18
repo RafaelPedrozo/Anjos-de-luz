@@ -106,7 +106,7 @@ export function ConfiguracoesNotificacoesPage() {
             <Mail size={20} />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-white">Lembretes de vencimento por e-mail</h2>
+            <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Lembretes de vencimento por e-mail</h2>
             <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
               Alertas automáticos de boletos e contas a pagar via Nodemailer
             </p>
@@ -115,7 +115,7 @@ export function ConfiguracoesNotificacoesPage() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <label className="flex cursor-pointer items-center justify-between rounded-[10px] bg-[var(--color-list-item)] px-4 py-3.5">
-            <span className="text-sm text-white">Ativar lembretes por e-mail</span>
+            <span className="text-sm text-[var(--color-text-primary)]">Ativar lembretes por e-mail</span>
             <input
               type="checkbox"
               checked={form.emailVencimentosAtivo}
@@ -130,13 +130,13 @@ export function ConfiguracoesNotificacoesPage() {
               <Input
                 label="E-mail de destino (opcional)"
                 type="email"
-                placeholder={emailEmpresa || "contato@empresa.com.br"}
+                placeholder={emailEmpresa || "contato@anjosdeluz.org"}
                 value={form.emailDestino}
                 onChange={(e) => setForm({ ...form, emailDestino: e.target.value })}
                 disabled={!isAdmin}
               />
               <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
-                Vazio = usa o e-mail da empresa ({emailEmpresa || "não cadastrado"})
+                Vazio = usa o e-mail da ONG ({emailEmpresa || "não cadastrado"})
               </p>
             </div>
             <Select
@@ -155,7 +155,7 @@ export function ConfiguracoesNotificacoesPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <label className="flex cursor-pointer items-center justify-between rounded-[10px] bg-[var(--color-list-item)] px-4 py-3.5">
-              <span className="text-sm text-white">No dia do vencimento</span>
+              <span className="text-sm text-[var(--color-text-primary)]">No dia do vencimento</span>
               <input
                 type="checkbox"
                 checked={form.emailNoDiaVencimento}
@@ -165,7 +165,7 @@ export function ConfiguracoesNotificacoesPage() {
               />
             </label>
             <label className="flex cursor-pointer items-center justify-between rounded-[10px] bg-[var(--color-list-item)] px-4 py-3.5">
-              <span className="text-sm text-white">Contas atrasadas</span>
+              <span className="text-sm text-[var(--color-text-primary)]">Contas atrasadas</span>
               <input
                 type="checkbox"
                 checked={form.emailAtrasados}
@@ -205,7 +205,7 @@ export function ConfiguracoesNotificacoesPage() {
 
       {historico.length > 0 && (
         <Card className="p-6">
-          <h3 className="text-base font-semibold text-white">Histórico de e-mails</h3>
+          <h3 className="text-base font-semibold text-[var(--color-text-primary)]">Histórico de e-mails</h3>
           <ul className="mt-4 flex flex-col gap-2.5">
             {historico.map((item) => (
               <li
@@ -214,7 +214,7 @@ export function ConfiguracoesNotificacoesPage() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-white">{item.assunto}</p>
+                    <p className="text-sm font-medium text-[var(--color-text-primary)]">{item.assunto}</p>
                     <p className="mt-0.5 text-xs text-[var(--color-text-secondary)]">
                       {item.descricao} · {item.fornecedor} · {tipoLabels[item.tipo] ?? item.tipo}
                     </p>

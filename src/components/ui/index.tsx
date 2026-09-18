@@ -36,7 +36,7 @@ export function IconButton({ children, className, ...props }: IconButtonProps) {
       className={cn(
         "flex h-10 w-10 items-center justify-center rounded-[var(--radius-button)]",
         "text-[var(--color-text-secondary)] transition-colors duration-150",
-        "hover:bg-white/5 hover:text-[var(--color-text-primary)]",
+        "hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]",
         className,
       )}
       {...props}
@@ -57,8 +57,8 @@ export function Badge({ children, className, variant = "default" }: BadgeProps) 
     <span
       className={cn(
         "inline-flex items-center rounded-[var(--radius-tag)] px-2.5 py-1 text-xs font-medium",
-        variant === "default" && "bg-white/10 text-[var(--color-text-secondary)]",
-        variant === "primary" && "bg-white/20 text-white",
+        variant === "default" && "bg-[var(--color-hover)] text-[var(--color-text-secondary)]",
+        variant === "primary" && "bg-[var(--color-on-primary)]/15 text-[var(--color-on-primary)]",
         variant === "success" && "bg-[var(--color-success)]/15 text-[var(--color-success)]",
         variant === "warning" && "bg-[var(--color-warning)]/15 text-[var(--color-warning)]",
         className,
@@ -79,7 +79,7 @@ export function Avatar({ initials, className, size = "md" }: AvatarProps) {
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] font-semibold text-white",
+        "flex shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] font-semibold text-[var(--color-on-primary)]",
         size === "sm" && "h-8 w-8 text-xs",
         size === "md" && "h-9 w-9 text-sm",
         className,

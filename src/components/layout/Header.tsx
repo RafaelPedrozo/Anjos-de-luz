@@ -15,10 +15,10 @@ import {
   FileText,
   Loader2,
   Search,
-  Users,
-  Wallet,
-  ArrowDownLeft,
-  ArrowUpRight,
+  PawPrint,
+  HeartHandshake,
+  HandCoins,
+  MapPin,
 } from "lucide-react";
 import { IconButton } from "@/components/ui";
 import { Modal } from "@/components/shared";
@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils";
 
 interface SearchResult {
   id: string;
-  type: "entrada" | "saida" | "conta" | "cliente";
+  type: "animal" | "resgate" | "adocao" | "doacao";
   title: string;
   subtitle: string;
   href: string;
@@ -44,13 +44,13 @@ interface NotificationItem {
 }
 
 const RESULT_ICON = {
-  entrada: ArrowDownLeft,
-  saida: ArrowUpRight,
-  conta: Wallet,
-  cliente: Users,
+  animal: PawPrint,
+  resgate: MapPin,
+  adocao: HeartHandshake,
+  doacao: HandCoins,
 } as const;
 
-const SEEN_NOTIF_KEY = "viaconeta-notif-seen";
+const SEEN_NOTIF_KEY = "anjosdeluz-notif-seen";
 
 function readSeenNotifIds(): Set<string> {
   try {
@@ -80,7 +80,7 @@ interface HeaderProps {
 
 export function Header({
   title = "Dashboard",
-  subtitle = "Visão geral das finanças",
+  subtitle = "Visão geral de animais, adoções e doações",
 }: HeaderProps) {
   const router = useRouter();
   const { month, year, label, setPeriod } = usePeriod();
@@ -120,7 +120,7 @@ export function Header({
             id: `bill-${bill.id}`,
             title: bill.name,
             subtitle: `${bill.dueIn} · ${bill.amount}`,
-            href: "/contas-a-pagar",
+            href: "/animais",
             kind: bill.dueIn === "Vence hoje" ? "atrasado" : "vencimento",
           });
         }
@@ -261,7 +261,7 @@ export function Header({
   return (
     <header className="flex min-h-[var(--spacing-header)] items-center justify-between px-[var(--spacing-content)] pt-8 pb-6">
       <div>
-        <h1 className="text-[28px] font-bold leading-tight text-white">{title}</h1>
+        <h1 className="text-[28px] font-bold leading-tight text-[var(--color-text-primary)]">{title}</h1>
         <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{subtitle}</p>
       </div>
 
@@ -289,7 +289,7 @@ export function Header({
             <div className="absolute right-0 top-12 z-40 w-[360px] overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-card)] shadow-[var(--shadow-card)]">
               <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-3">
                 <div>
-                  <p className="text-sm font-semibold text-white">Notificações</p>
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)]">Notificações</p>
                   <p className="text-xs text-[var(--color-text-secondary)]">
                     Vencimentos e lembretes recentes
                   </p>
@@ -323,12 +323,12 @@ export function Header({
                             setNotifOpen(false);
                             router.push(item.href);
                           }}
-                          className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-white/5"
+                          className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-[var(--color-hover)]"
                         >
                           <span
                             className={cn(
                               "mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
-                              item.kind === "email" && "bg-white/10 text-white",
+                              item.kind === "email" && "bg-[var(--color-hover)] text-[var(--color-text-primary)]",
                               item.kind === "vencimento" &&
                                 "bg-[var(--color-warning)]/15 text-[var(--color-warning)]",
                               item.kind === "atrasado" &&
@@ -342,7 +342,7 @@ export function Header({
                             )}
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="block truncate text-sm text-white">
+                            <span className="block truncate text-sm text-[var(--color-text-primary)]">
                               {item.title}
                             </span>
                             <span className="mt-0.5 block truncate text-xs text-[var(--color-text-secondary)]">
@@ -363,7 +363,7 @@ export function Header({
           <button
             type="button"
             onClick={openPeriod}
-            className="flex items-center gap-2 rounded-[var(--radius-button)] bg-[var(--color-primary)] px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-[var(--color-primary-hover)]"
+            className="flex items-center gap-2 rounded-[var(--radius-button)] bg-[var(--color-primary)] px-4 py-2.5 text-sm font-medium text-[var(--color-on-primary)] transition-colors duration-150 hover:bg-[var(--color-primary-hover)]"
             aria-label="Selecionar período"
             aria-expanded={periodOpen}
           >
@@ -376,7 +376,7 @@ export function Header({
               onSubmit={applyPeriod}
               className="absolute right-0 top-12 z-40 w-[280px] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-card)] p-4 shadow-[var(--shadow-card)]"
             >
-              <p className="mb-3 text-sm font-semibold text-white">Período</p>
+              <p className="mb-3 text-sm font-semibold text-[var(--color-text-primary)]">Período</p>
               <div className="flex flex-col gap-3">
                 <Select
                   label="Mês"
@@ -410,7 +410,7 @@ export function Header({
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
         title="Buscar"
-        subtitle="Entradas, saídas, contas e clientes"
+        subtitle="Animais, resgates, adoções e doações"
         className="max-w-xl"
       >
         <div className="flex flex-col gap-4">
@@ -445,13 +445,13 @@ export function Header({
                       <button
                         type="button"
                         onClick={() => goToResult(item)}
-                        className="flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left transition-colors hover:bg-white/5"
+                        className="flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left transition-colors hover:bg-[var(--color-hover)]"
                       >
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--color-hover)] text-[var(--color-text-primary)]">
                           <Icon size={16} />
                         </span>
                         <span className="min-w-0 flex-1">
-                          <span className="block truncate text-sm text-white">
+                          <span className="block truncate text-sm text-[var(--color-text-primary)]">
                             {item.title}
                           </span>
                           <span className="block truncate text-xs text-[var(--color-text-secondary)]">

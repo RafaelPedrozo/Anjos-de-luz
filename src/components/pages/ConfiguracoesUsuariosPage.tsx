@@ -169,7 +169,7 @@ export function ConfiguracoesUsuariosPage() {
           <button
             type="button"
             onClick={() => openEdit(r)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-white"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
             aria-label="Editar"
           >
             <Pencil size={14} />
@@ -215,7 +215,7 @@ export function ConfiguracoesUsuariosPage() {
         searchValue={search}
         onSearchChange={setSearch}
         searchPlaceholder="Pesquisar usuários..."
-        actionLabel="Criar Usuário"
+        actionLabel="Cadastrar usuário"
         actionIcon={<Plus size={16} strokeWidth={2} />}
         onAction={openCreate}
       />
@@ -234,15 +234,15 @@ export function ConfiguracoesUsuariosPage() {
           setModalOpen(false);
           setTempPassword("");
         }}
-        title={editing ? "Editar Usuário" : "Criar Usuário"}
-        subtitle="Gestão de acesso ao sistema"
+        title={editing ? "Editar usuário" : "Cadastrar usuário"}
+        subtitle="Acesso à gestão financeira da ONG Anjos de Luz"
       >
         {tempPassword ? (
           <div className="flex flex-col gap-4">
             <p className="text-sm text-[var(--color-text-secondary)]">
               Usuário criado. Senha temporária:
             </p>
-            <p className="rounded-[var(--radius-button)] bg-[var(--color-list-item)] px-4 py-3 font-mono text-sm text-white">
+            <p className="rounded-[var(--radius-button)] bg-[var(--color-list-item)] px-4 py-3 font-mono text-sm text-[var(--color-text-primary)]">
               {tempPassword}
             </p>
             <Button onClick={() => { setModalOpen(false); setTempPassword(""); }}>
@@ -288,7 +288,7 @@ export function ConfiguracoesUsuariosPage() {
               <Button variant="secondary" onClick={() => setModalOpen(false)}>
                 Cancelar
               </Button>
-              <Button type="submit">{editing ? "Salvar" : "Criar Usuário"}</Button>
+              <Button type="submit">{editing ? "Salvar" : "Cadastrar usuário"}</Button>
             </div>
           </form>
         )}

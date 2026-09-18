@@ -51,7 +51,7 @@ export function StatCards({ cards }: StatCardsProps) {
               </div>
               <button
                 type="button"
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
                 aria-label="Mais opções"
               >
                 <MoreVertical size={16} strokeWidth={1.75} />
@@ -60,7 +60,7 @@ export function StatCards({ cards }: StatCardsProps) {
 
             <div>
               <p className="text-sm text-[var(--color-text-secondary)]">{card.label}</p>
-              <p className="mt-1 text-[28px] font-bold leading-tight text-white">{card.value}</p>
+              <p className="mt-1 text-[28px] font-bold leading-tight text-[var(--color-text-primary)]">{card.value}</p>
               {card.trend && (
                 <p className={cn("mt-2 flex items-center gap-1 text-xs font-medium", trendColor)}>
                   {card.trendDirection === "up" ? (

@@ -1,13 +1,24 @@
 import { cn } from "@/lib/utils";
 
-export type StatusVariant = "pendente" | "pago" | "atrasado" | "ativo" | "inativo";
+export type StatusVariant =
+  | "pendente"
+  | "pago"
+  | "atrasado"
+  | "ativo"
+  | "inativo"
+  | "disponivel"
+  | "adotado"
+  | "tratamento";
 
 const statusStyles: Record<StatusVariant, string> = {
   pendente: "bg-[var(--color-warning)]/15 text-[var(--color-warning)]",
   pago: "bg-[var(--color-success)]/15 text-[var(--color-success)]",
   atrasado: "bg-[var(--color-primary)]/15 text-[var(--color-primary)]",
   ativo: "bg-[var(--color-success)]/15 text-[var(--color-success)]",
-  inativo: "bg-white/10 text-[var(--color-text-secondary)]",
+  inativo: "bg-[var(--color-hover)] text-[var(--color-text-secondary)]",
+  disponivel: "bg-[var(--color-success)]/15 text-[var(--color-success)]",
+  adotado: "bg-[var(--color-primary)]/15 text-[var(--color-primary)]",
+  tratamento: "bg-[var(--color-warning)]/15 text-[var(--color-warning)]",
 };
 
 const statusLabels: Record<StatusVariant, string> = {
@@ -16,6 +27,9 @@ const statusLabels: Record<StatusVariant, string> = {
   atrasado: "Atrasado",
   ativo: "Ativo",
   inativo: "Inativo",
+  disponivel: "Disponível",
+  adotado: "Adotado",
+  tratamento: "Tratamento",
 };
 
 interface StatusBadgeProps {

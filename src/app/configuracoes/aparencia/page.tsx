@@ -8,7 +8,7 @@ export default function Page() {
         title="Aparência"
         description="Personalização visual do sistema"
         fields={[
-          { label: "Tema", value: "Dark Premium" },
+          { label: "Tema", value: "Anjos de Luz" },
           { label: "Idioma", value: "Português (BR)" },
           { label: "Formato de data", value: "DD/MM/AAAA" },
         ]}

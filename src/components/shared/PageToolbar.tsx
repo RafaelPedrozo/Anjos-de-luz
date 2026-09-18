@@ -48,7 +48,7 @@ export function PageToolbar({
           value={searchValue}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder={searchPlaceholder}
-          className="w-full rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] py-2.5 pl-10 pr-4 text-sm text-white outline-none placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]/50"
+          className="w-full rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] py-2.5 pl-10 pr-4 text-sm text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)]/50"
         />
       </div>
 
@@ -56,7 +56,7 @@ export function PageToolbar({
         <select
           value={periodValue}
           onChange={(e) => onPeriodChange(e.target.value)}
-          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none focus:border-[var(--color-primary)]/50"
+          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-primary)]/50"
         >
           {periodOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-[var(--color-card)]">
@@ -70,7 +70,7 @@ export function PageToolbar({
         <select
           value={categoryValue}
           onChange={(e) => onCategoryChange(e.target.value)}
-          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-white outline-none focus:border-[var(--color-primary)]/50"
+          className="rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-list-item)] px-3.5 py-2.5 text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-primary)]/50"
         >
           {categoryOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-[var(--color-card)]">
@@ -96,7 +96,7 @@ export function FilterButton({ label = "Filtrar" }: { label?: string }) {
   return (
     <button
       type="button"
-      className="flex items-center gap-2 rounded-[var(--radius-button)] border border-[var(--color-border)] bg-white/5 px-3.5 py-2.5 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-white/10 hover:text-white"
+      className="flex items-center gap-2 rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-hover)] px-3.5 py-2.5 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
     >
       <SlidersHorizontal size={15} strokeWidth={1.75} />
       {label}

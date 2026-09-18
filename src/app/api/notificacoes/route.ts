@@ -48,28 +48,12 @@ export async function GET() {
     select: { email: true },
   });
 
-  const historico = await prisma.lembreteEmail.findMany({
-    where: { empresaId: auth.session.empresaId },
-    orderBy: { enviadoEm: "desc" },
-    take: 20,
-    include: {
-      contaPagar: { select: { descricao: true, fornecedor: true } },
-    },
-  });
+  const historico: never[] = [];
 
   return NextResponse.json({
     config: serialize(config),
     emailEmpresa: empresa?.email ?? "",
-    historico: historico.map((h) => ({
-      id: h.id,
-      descricao: h.contaPagar.descricao,
-      fornecedor: h.contaPagar.fornecedor,
-      tipo: h.tipo,
-      email: h.email,
-      assunto: h.assunto,
-      sucesso: h.sucesso,
-      enviadoEm: h.enviadoEm.toISOString(),
-    })),
+    historico,
   });
 }
 

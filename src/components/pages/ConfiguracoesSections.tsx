@@ -22,7 +22,7 @@ export function ConfiguracoesStaticSection({ title, description, fields }: Stati
   return (
     <ConfiguracoesLayout>
       <Card className="p-6">
-        <h2 className="text-lg font-semibold text-white">{title}</h2>
+        <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">{title}</h2>
         <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">{description}</p>
         <div className="mt-6 flex flex-col gap-3">
           {fields.map((field) => (
@@ -31,7 +31,7 @@ export function ConfiguracoesStaticSection({ title, description, fields }: Stati
               className="flex items-center justify-between rounded-[10px] bg-[var(--color-list-item)] px-4 py-3.5"
             >
               <span className="text-sm text-[var(--color-text-secondary)]">{field.label}</span>
-              <span className="text-sm font-medium text-white">{field.value}</span>
+              <span className="text-sm font-medium text-[var(--color-text-primary)]">{field.value}</span>
             </div>
           ))}
         </div>

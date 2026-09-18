@@ -17,69 +17,65 @@ export async function GET(request: Request) {
   const contains = { contains: q, mode: "insensitive" as const };
 
   try {
-    const [entradas, saidas, contas, clientes] = await Promise.all([
-      prisma.entrada.findMany({
-        where: {
-          empresaId,
-          OR: [{ descricao: contains }, { cliente: contains }, { categoria: contains }],
-        },
-        take: 8,
-        orderBy: { data: "desc" },
-      }),
-      prisma.saida.findMany({
-        where: {
-          empresaId,
-          OR: [{ descricao: contains }, { fornecedor: contains }, { categoria: contains }],
-        },
-        take: 8,
-        orderBy: { data: "desc" },
-      }),
-      prisma.contaPagar.findMany({
-        where: {
-          empresaId,
-          OR: [{ descricao: contains }, { fornecedor: contains }],
-        },
-        take: 8,
-        orderBy: { vencimento: "asc" },
-      }),
-      prisma.cliente.findMany({
-        where: {
-          empresaId,
-          OR: [{ nome: contains }, { email: contains }, { documento: contains }],
-        },
+    const [animais, resgates, adocoes, doacoes] = await Promise.all([
+      prisma.animal.findMany({
+        where: { empresaId, OR: [{ nome: contains }, { especie: contains }] },
         take: 8,
         orderBy: { nome: "asc" },
+      }),
+      prisma.resgate.findMany({
+        where: {
+          empresaId,
+          OR: [{ local: contains }, { descricao: contains }],
+        },
+        take: 8,
+        include: { animal: { select: { nome: true } } },
+        orderBy: { data: "desc" },
+      }),
+      prisma.adocao.findMany({
+        where: {
+          empresaId,
+          OR: [{ adotanteNome: contains }, { adotanteEmail: contains }],
+        },
+        take: 8,
+        include: { animal: { select: { nome: true } } },
+        orderBy: { data: "desc" },
+      }),
+      prisma.doacao.findMany({
+        where: { empresaId, doador: contains },
+        take: 8,
+        orderBy: { data: "desc" },
       }),
     ]);
 
     const results = [
-      ...entradas.map((e) => ({
-        id: e.id,
-        type: "entrada" as const,
-        title: e.descricao,
-        subtitle: `${e.cliente} · Entrada`,
-        href: "/entradas",
+      ...animais.map((a) => ({
+        id: a.id,
+        type: "animal" as const,
+        title: a.nome,
+        subtitle: `${a.especie} · Animal`,
+        href: "/animais",
       })),
-      ...saidas.map((s) => ({
-        id: s.id,
-        type: "saida" as const,
-        title: s.descricao,
-        subtitle: `${s.fornecedor} · Saída`,
-        href: "/saidas",
+      ...resgates.map((r) => ({
+        id: r.id,
+        type: "resgate" as const,
+        title: r.animal.nome,
+        subtitle: `${r.local} · Resgate`,
+        href: "/animais",
       })),
-      ...contas.map((c) => ({
-        id: c.id,
-        type: "conta" as const,
-        title: c.descricao,
-        subtitle: `${c.fornecedor} · Conta a pagar`,
-        href: "/contas-a-pagar",
+      ...adocoes.map((a) => ({
+        id: a.id,
+        type: "adocao" as const,
+        title: a.animal.nome,
+        subtitle: `${a.adotanteNome} · Adoção`,
+        href: "/adocoes",
       })),
-      ...clientes.map((c) => ({
-        id: c.id,
-        type: "cliente" as const,
-        title: c.nome,
-        subtitle: `${c.email || c.documento || "Cliente"}`,
-        href: "/clientes",
+      ...doacoes.map((d) => ({
+        id: d.id,
+        type: "doacao" as const,
+        title: d.doador,
+        subtitle: `${d.tipo} · Doação`,
+        href: "/doacoes",
       })),
     ].slice(0, 20);
 

@@ -22,20 +22,20 @@ function escapeCsv(value: string | number) {
 export function buildRelatorioCsv(data: RelatorioExportData) {
   const lines: string[] = [];
 
-  lines.push("ViaConeta - Relatório Financeiro");
+  lines.push("Anjos de Luz - Relatório da ONG");
   lines.push(`Gerado em;${data.geradoEm}`);
   lines.push(`Período;${data.mesLabel}/${data.ano}`);
   lines.push("");
 
   lines.push("Resumo do mês");
   lines.push("Indicador;Valor");
-  lines.push(`Entradas;${data.entradasMes}`);
-  lines.push(`Saídas;${data.saidasMes}`);
+  lines.push(`Doações;${data.entradasMes}`);
+  lines.push(`Custos de resgate;${data.saidasMes}`);
   lines.push(`Saldo;${data.saldoMes}`);
   lines.push("");
 
-  lines.push("Fluxo de Caixa (últimos 6 meses)");
-  lines.push("Mês;Entradas;Saídas;Saldo");
+  lines.push("Doações (últimos 6 meses)");
+  lines.push("Mês;Doações;Custos de resgate;Valor");
   for (const row of data.cashFlow) {
     lines.push(
       [
@@ -48,7 +48,7 @@ export function buildRelatorioCsv(data: RelatorioExportData) {
   }
   lines.push("");
 
-  lines.push("Despesas por categoria");
+  lines.push("Doações por tipo");
   lines.push("Categoria;Valor");
   for (const cat of data.categorias) {
     lines.push([escapeCsv(cat.name), escapeCsv(cat.value)].join(";"));

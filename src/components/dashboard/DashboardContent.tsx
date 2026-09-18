@@ -52,7 +52,7 @@ export function DashboardContent() {
         <button
           type="button"
           onClick={load}
-          className="mt-4 text-sm font-medium text-white underline"
+          className="mt-4 text-sm font-medium text-[var(--color-text-primary)] underline"
         >
           Tentar novamente
         </button>

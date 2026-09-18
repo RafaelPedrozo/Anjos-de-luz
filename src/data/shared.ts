@@ -29,28 +29,21 @@ export const yearOptions = [
 ];
 
 export const paymentMethods = [
-  { value: "pix", label: "PIX" },
-  { value: "boleto", label: "Boleto" },
-  { value: "cartao", label: "Cartão" },
-  { value: "transferencia", label: "Transferência" },
-  { value: "dinheiro", label: "Dinheiro" },
+  { value: "PIX", label: "PIX" },
+  { value: "CARTAO", label: "Cartão" },
 ];
 
-export const incomeCategories = [
-  { value: "all", label: "Todas as categorias" },
-  { value: "vendas", label: "Vendas" },
-  { value: "servicos", label: "Serviços" },
-  { value: "consultoria", label: "Consultoria" },
-  { value: "outros", label: "Outros" },
+export const especiesOptions = [
+  { value: "all", label: "Todas as espécies" },
+  { value: "Cão", label: "Cão" },
+  { value: "Gato", label: "Gato" },
+  { value: "Outro", label: "Outro" },
 ];
 
-export const expenseCategories = [
-  { value: "all", label: "Todas as categorias" },
-  { value: "fornecedores", label: "Fornecedores" },
-  { value: "salarios", label: "Salários" },
-  { value: "aluguel", label: "Aluguel" },
-  { value: "marketing", label: "Marketing" },
-  { value: "outros", label: "Outros" },
+export const statusAnimalOptions = [
+  { value: "DISPONIVEL", label: "Disponível" },
+  { value: "ADOTADO", label: "Adotado" },
+  { value: "TRATAMENTO", label: "Tratamento" },
 ];
 
 export function formatCurrency(value: number) {

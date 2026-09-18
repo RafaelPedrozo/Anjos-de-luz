@@ -1,32 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  /* Cores */
-  --color-background: #0b0b0f;
-  --color-surface: #16161a;
-  --color-card: #0f1324;
-  --color-list-item: #16161d;
+  /* Paleta Anjos de Luz */
+  --color-background: #fff8f0;
+  --color-surface: #2f453a;
+  --color-card: #ffffff;
+  --color-list-item: #fff3e6;
 
-  --color-primary: #e60023;
-  --color-primary-hover: #cc001f;
+  --color-primary: #f4a261;
+  --color-primary-hover: #e08a45;
+  --color-on-primary: #2f453a;
+  --color-on-surface: #fff8f0;
 
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #949494;
-  --color-text-muted: #a0a0a0;
+  --color-text-primary: #2f453a;
+  --color-text-secondary: #5c7268;
+  --color-text-muted: #8a9a93;
 
-  --color-success: #00c853;
-  --color-success-muted: #10b981;
-  --color-warning: #f97316;
+  --color-success: #2f453a;
+  --color-success-muted: #3d5a4c;
+  --color-warning: #f4a261;
 
-  --color-purple: #8b5cf6;
-  --color-pink: #ec4899;
-  --color-gray-chart: #6b7280;
+  --color-purple: #2f453a;
+  --color-pink: #e08a45;
+  --color-gray-chart: #8a9a93;
 
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(47, 69, 58, 0.14);
+  --color-border-subtle: rgba(47, 69, 58, 0.08);
+  --color-hover: rgba(47, 69, 58, 0.08);
 
-  --color-sidebar-active: #e60023;
-  --color-sidebar-active-glow: rgba(230, 0, 35, 0.25);
+  --color-sidebar-active: #f4a261;
+  --color-sidebar-active-glow: rgba(244, 162, 97, 0.35);
 
   /* Espaçamento */
   --spacing-sidebar: 240px;
@@ -40,9 +43,9 @@
   --radius-tag: 8px;
 
   /* Sombras */
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-primary-card: 0 8px 32px rgba(230, 0, 35, 0.3);
-  --shadow-sidebar-active: 0 4px 16px rgba(230, 0, 35, 0.25);
+  --shadow-card: 0 4px 24px rgba(47, 69, 58, 0.08);
+  --shadow-primary-card: 0 8px 32px rgba(244, 162, 97, 0.35);
+  --shadow-sidebar-active: 0 4px 16px rgba(244, 162, 97, 0.35);
 
   /* Tipografia */
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -69,7 +72,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar escura */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -80,10 +82,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(47, 69, 58, 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(47, 69, 58, 0.4);
 }

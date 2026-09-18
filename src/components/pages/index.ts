@@ -1,8 +1,7 @@
-export { EntradasPage } from "./EntradasPage";
-export { SaidasPage } from "./SaidasPage";
-export { ContasAPagarPage } from "./ContasAPagarPage";
+export { AnimaisPage } from "./AnimaisPage";
+export { AdocoesPage } from "./AdocoesPage";
+export { DoacoesPage } from "./DoacoesPage";
 export { RelatoriosPage } from "./RelatoriosPage";
-export { ClientesPage } from "./ClientesPage";
 export { ConfiguracoesEmpresaPage } from "./ConfiguracoesEmpresaPage";
 export { ConfiguracoesUsuariosPage } from "./ConfiguracoesUsuariosPage";
 export { ConfiguracoesNotificacoesPage } from "./ConfiguracoesNotificacoesPage";

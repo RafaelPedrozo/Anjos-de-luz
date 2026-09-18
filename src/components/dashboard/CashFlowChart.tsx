@@ -50,9 +50,15 @@ function niceMax(value: number) {
 
 interface CashFlowChartProps {
   data: CashFlowPoint[];
+  title?: string;
+  subtitle?: string;
 }
 
-export function CashFlowChart({ data }: CashFlowChartProps) {
+export function CashFlowChart({
+  data,
+  title = "Doações",
+  subtitle = "Últimos 6 meses",
+}: CashFlowChartProps) {
   const yMax = niceMax(Math.max(...data.map((d) => d.value), 0));
   const yTicks = [0, yMax / 4, yMax / 2, (yMax * 3) / 4, yMax];
 
@@ -73,14 +79,14 @@ export function CashFlowChart({ data }: CashFlowChartProps) {
     <Card className="flex flex-col p-6">
       <div className="mb-6 flex items-start justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-white">Fluxo de Caixa</h2>
+          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">{title}</h2>
           <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
-            Últimos 6 meses
+            {subtitle}
           </p>
         </div>
         <button
           type="button"
-          className="flex items-center gap-2 rounded-[var(--radius-button)] border border-[var(--color-border)] bg-white/5 px-3.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-white/10 hover:text-white"
+          className="flex items-center gap-2 rounded-[var(--radius-button)] border border-[var(--color-border)] bg-[var(--color-hover)] px-3.5 py-2 text-sm text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-hover)] hover:text-[var(--color-text-primary)]"
         >
           <SlidersHorizontal size={15} strokeWidth={1.75} />
           Filtrar
@@ -90,7 +96,7 @@ export function CashFlowChart({ data }: CashFlowChartProps) {
       <div className="h-[280px] w-full">
         {data.length === 0 ? (
           <div className="flex h-full items-center justify-center text-sm text-[var(--color-text-secondary)]">
-            Sem dados de fluxo de caixa
+            Sem dados de doações
           </div>
         ) : (
           <svg
@@ -101,8 +107,8 @@ export function CashFlowChart({ data }: CashFlowChartProps) {
           >
             <defs>
               <linearGradient id="cashFlowGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#E60023" stopOpacity={0.35} />
-                <stop offset="100%" stopColor="#E60023" stopOpacity={0} />
+                <stop offset="0%" stopColor="#F4A261" stopOpacity={0.45} />
+                <stop offset="100%" stopColor="#F4A261" stopOpacity={0} />
               </linearGradient>
             </defs>
 
@@ -115,14 +121,14 @@ export function CashFlowChart({ data }: CashFlowChartProps) {
                     y1={y}
                     x2={WIDTH - PADDING.right}
                     y2={y}
-                    stroke="rgba(255,255,255,0.04)"
+                    stroke="rgba(47,69,58,0.08)"
                     strokeWidth={1}
                   />
                   <text
                     x={PADDING.left - 10}
                     y={y + 4}
                     textAnchor="end"
-                    fill="#949494"
+                    fill="#8A9A93"
                     fontSize={11}
                   >
                     {tick === 0 ? "0" : Math.round(tick).toLocaleString("pt-BR")}
@@ -136,7 +142,7 @@ export function CashFlowChart({ data }: CashFlowChartProps) {
               <path
                 d={linePath}
                 fill="none"
-                stroke="#E60023"
+                stroke="#F4A261"
                 strokeWidth={2.5}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -149,7 +155,7 @@ export function CashFlowChart({ data }: CashFlowChartProps) {
                 x={scaleX(i, data.length)}
                 y={HEIGHT - 8}
                 textAnchor="middle"
-                fill="#949494"
+                fill="#8A9A93"
                 fontSize={11}
               >
                 {d.month}

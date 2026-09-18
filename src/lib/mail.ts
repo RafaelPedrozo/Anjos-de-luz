@@ -24,15 +24,15 @@ export async function sendPasswordResetEmail(to: string, nome: string, senhaTemp
   const from = process.env.SMTP_FROM ?? process.env.SMTP_USER;
   const appUrl = process.env.APP_URL ?? "http://localhost:3000";
 
-  const subject = "ViaConeta — Senha redefinida";
+  const subject = "Anjos de Luz — Senha redefinida";
   const html = `
-    <div style="font-family: Inter, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px;">
-      <h2 style="color: #E60023;">ViaConeta</h2>
+    <div style="font-family: Inter, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px; background: #FFF8F0;">
+      <h2 style="color: #2F453A;">Anjos de Luz</h2>
       <p>Olá, <strong>${nome}</strong>.</p>
       <p>Sua senha foi redefinida por um administrador.</p>
       <p><strong>Nova senha temporária:</strong> ${senhaTemporaria}</p>
       <p>Acesse o sistema e altere sua senha o quanto antes.</p>
-      <p><a href="${appUrl}/login" style="color: #E60023;">Entrar no ViaConeta</a></p>
+      <p><a href="${appUrl}/login" style="color: #E08A45;">Entrar no Anjos de Luz</a></p>
     </div>
   `;
 
@@ -50,14 +50,14 @@ export async function sendWelcomeEmail(to: string, nome: string, senha: string) 
   const from = process.env.SMTP_FROM ?? process.env.SMTP_USER;
   const appUrl = process.env.APP_URL ?? "http://localhost:3000";
 
-  const subject = "ViaConeta — Bem-vindo ao sistema";
+  const subject = "Anjos de Luz — Bem-vindo ao sistema";
   const html = `
-    <div style="font-family: Inter, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px;">
-      <h2 style="color: #E60023;">ViaConeta</h2>
+    <div style="font-family: Inter, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px; background: #FFF8F0;">
+      <h2 style="color: #2F453A;">Anjos de Luz</h2>
       <p>Olá, <strong>${nome}</strong>.</p>
-      <p>Sua conta foi criada com sucesso.</p>
+      <p>Sua conta de acesso à gestão financeira da ONG foi criada com sucesso.</p>
       <p><strong>Senha de acesso:</strong> ${senha}</p>
-      <p><a href="${appUrl}/login" style="color: #E60023;">Acessar o sistema</a></p>
+      <p><a href="${appUrl}/login" style="color: #E08A45;">Acessar o sistema</a></p>
     </div>
   `;
 
@@ -103,19 +103,19 @@ export async function sendVencimentoEmail(
 ) {
   const appUrl = process.env.APP_URL ?? "http://localhost:3000";
   const html = `
-    <div style="font-family: Inter, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px; background: #0F1324; color: #fff; border-radius: 16px;">
-      <h2 style="color: #E60023; margin: 0 0 16px;">ViaConeta</h2>
-      <p style="color: #949494; margin: 0 0 20px;">Lembrete de vencimento</p>
-      <div style="background: #16161D; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+    <div style="font-family: Inter, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px; background: #FFF8F0; color: #2F453A; border-radius: 16px;">
+      <h2 style="color: #2F453A; margin: 0 0 16px;">Anjos de Luz</h2>
+      <p style="color: #5C7268; margin: 0 0 20px;">Lembrete de vencimento</p>
+      <div style="background: #FFFFFF; border-radius: 12px; padding: 16px; margin-bottom: 20px; border: 1px solid rgba(47,69,58,0.14);">
         <p style="margin: 0 0 8px; font-size: 16px; font-weight: 600;">${dados.descricao}</p>
-        <p style="margin: 0 0 4px; color: #949494; font-size: 14px;">Fornecedor: ${dados.fornecedor}</p>
-        <p style="margin: 0 0 4px; color: #949494; font-size: 14px;">Vencimento: ${dados.vencimento}</p>
-        <p style="margin: 8px 0 0; font-size: 18px; font-weight: 700; color: #E60023;">${dados.valor}</p>
+        <p style="margin: 0 0 4px; color: #5C7268; font-size: 14px;">Fornecedor: ${dados.fornecedor}</p>
+        <p style="margin: 0 0 4px; color: #5C7268; font-size: 14px;">Vencimento: ${dados.vencimento}</p>
+        <p style="margin: 8px 0 0; font-size: 18px; font-weight: 700; color: #E08A45;">${dados.valor}</p>
       </div>
-      <p style="color: #949494; font-size: 13px; margin: 0;">${corpoTexto}</p>
+      <p style="color: #5C7268; font-size: 13px; margin: 0;">${corpoTexto}</p>
       <p style="margin-top: 24px;">
-        <a href="${appUrl}/contas-a-pagar" style="color: #E60023; text-decoration: none; font-weight: 500;">
-          Ver contas a pagar →
+        <a href="${appUrl}/doacoes" style="color: #E08A45; text-decoration: none; font-weight: 500;">
+          Ver doações →
         </a>
       </p>
     </div>

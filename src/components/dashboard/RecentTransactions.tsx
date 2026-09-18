@@ -14,13 +14,13 @@ export function RecentTransactions({ transactions, count }: RecentTransactionsPr
     <Card className="flex flex-col p-6">
       <div className="mb-5 flex items-start justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-white">Últimas Movimentações</h2>
+          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">Atividades recentes</h2>
           <p className="mt-0.5 text-sm text-[var(--color-text-secondary)]">
-            {count} transação(ões) recente(s)
+            {count} registro(s) recente(s)
           </p>
         </div>
         <Link
-          href="/entradas"
+          href="/doacoes"
           className="text-sm font-medium text-[var(--color-primary)] transition-colors hover:text-[var(--color-primary-hover)]"
         >
           Ver todas
@@ -29,7 +29,7 @@ export function RecentTransactions({ transactions, count }: RecentTransactionsPr
 
       {transactions.length === 0 ? (
         <p className="py-8 text-center text-sm text-[var(--color-text-secondary)]">
-          Nenhuma movimentação registrada
+          Nenhuma atividade registrada
         </p>
       ) : (
         <ul className="flex flex-col gap-2.5">
@@ -57,7 +57,7 @@ export function RecentTransactions({ transactions, count }: RecentTransactionsPr
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-white">{tx.description}</p>
+                  <p className="truncate text-sm font-medium text-[var(--color-text-primary)]">{tx.description}</p>
                   <p className="mt-0.5 text-xs text-[var(--color-text-secondary)]">
                     {tx.category}
                   </p>

@@ -3,7 +3,7 @@ import { ConfiguracoesUsuariosWrapper } from "@/components/pages/ConfiguracoesSe
 
 export default function Page() {
   return (
-    <MainLayout title="Configurações" subtitle="Usuários do sistema">
+    <MainLayout title="Configurações" subtitle="Usuários com acesso à gestão financeira">
       <ConfiguracoesUsuariosWrapper />
     </MainLayout>
   );

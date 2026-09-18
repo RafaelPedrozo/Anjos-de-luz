@@ -2,60 +2,15 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getTenantSession, jsonError } from "@/lib/api/tenant";
 import { formatCurrency, formatDate } from "@/data/shared";
+import { dateOnly, toNumber } from "@/lib/api/serialize";
 
 const MONTH_LABELS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-
-const CATEGORY_COLORS: Record<string, string> = {
-  Fornecedores: "#E60023",
-  Salários: "#F97316",
-  Aluguel: "#8B5CF6",
-  Marketing: "#EC4899",
-  Outros: "#6B7280",
-};
-
-/** Data calendário YYYY-MM-DD a partir de Date armazenada como UTC date-only. */
-function dateKeyUtc(d: Date) {
-  return [
-    d.getUTCFullYear(),
-    String(d.getUTCMonth() + 1).padStart(2, "0"),
-    String(d.getUTCDate()).padStart(2, "0"),
-  ].join("-");
-}
-
-function todayKeyLocal(now = new Date()) {
-  return [
-    now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, "0"),
-    String(now.getDate()).padStart(2, "0"),
-  ].join("-");
-}
-
-function addDaysKey(iso: string, days: number) {
-  const [y, m, d] = iso.split("-").map(Number);
-  return dateKeyUtc(new Date(Date.UTC(y!, m! - 1, d! + days)));
-}
-
-function daysBetweenKeys(from: string, to: string) {
-  const [y1, m1, d1] = from.split("-").map(Number);
-  const [y2, m2, d2] = to.split("-").map(Number);
-  const a = Date.UTC(y1!, m1! - 1, d1!);
-  const b = Date.UTC(y2!, m2! - 1, d2!);
-  return Math.round((b - a) / (1000 * 60 * 60 * 24));
-}
-
-function startOfTodayUtc(now = new Date()) {
-  return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
-}
 
 function monthRange(year: number, monthIndex: number) {
   return {
     start: new Date(year, monthIndex, 1, 0, 0, 0, 0),
     end: new Date(year, monthIndex + 1, 0, 23, 59, 59, 999),
   };
-}
-
-function toNumber(value: { toNumber: () => number } | number) {
-  return typeof value === "number" ? value : value.toNumber();
 }
 
 function percentChange(current: number, previous: number) {
@@ -81,168 +36,135 @@ export async function GET() {
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
     const prevMonthDate = new Date(currentYear, currentMonth - 1, 1);
-    const prevMonth = prevMonthDate.getMonth();
-    const prevYear = prevMonthDate.getFullYear();
-
     const currentRange = monthRange(currentYear, currentMonth);
-    const prevRange = monthRange(prevYear, prevMonth);
-    const todayKey = todayKeyLocal(now);
-    const in7DaysKey = addDaysKey(todayKey, 7);
+    const prevRange = monthRange(prevMonthDate.getFullYear(), prevMonthDate.getMonth());
 
-    // Sincroniza pendentes vencidas → ATRASADO
-    await prisma.contaPagar.updateMany({
-      where: {
-        empresaId,
-        status: "PENDENTE",
-        vencimento: { lt: startOfTodayUtc(now) },
-      },
-      data: { status: "ATRASADO" },
-    });
-
-    const [entradas, saidas, contas] = await Promise.all([
-      prisma.entrada.findMany({ where: { empresaId } }),
-      prisma.saida.findMany({ where: { empresaId } }),
-      prisma.contaPagar.findMany({
-        where: { empresaId, status: { in: ["PENDENTE", "ATRASADO"] } },
-        orderBy: { vencimento: "asc" },
+    const [animais, resgates, adocoes, doacoes] = await Promise.all([
+      prisma.animal.findMany({ where: { empresaId } }),
+      prisma.resgate.findMany({
+        where: { empresaId },
+        include: { animal: { select: { nome: true } } },
       }),
+      prisma.adocao.findMany({
+        where: { empresaId },
+        include: { animal: { select: { nome: true } } },
+      }),
+      prisma.doacao.findMany({ where: { empresaId } }),
     ]);
 
-    const entradasMes = entradas.filter(
-      (e) => e.data >= currentRange.start && e.data <= currentRange.end && e.status === "RECEBIDO",
-    );
-    const saidasMes = saidas.filter(
-      (s) => s.data >= currentRange.start && s.data <= currentRange.end && s.status === "PAGO",
-    );
-    const entradasPrev = entradas.filter(
-      (e) => e.data >= prevRange.start && e.data <= prevRange.end && e.status === "RECEBIDO",
-    );
-    const saidasPrev = saidas.filter(
-      (s) => s.data >= prevRange.start && s.data <= prevRange.end && s.status === "PAGO",
-    );
+    const doacoesMes = doacoes.filter((d) => d.data >= currentRange.start && d.data <= currentRange.end);
+    const doacoesPrev = doacoes.filter((d) => d.data >= prevRange.start && d.data <= prevRange.end);
+    const custosMes = resgates.filter((r) => r.data >= currentRange.start && r.data <= currentRange.end);
+    const custosPrev = resgates.filter((r) => r.data >= prevRange.start && r.data <= prevRange.end);
+    const adocoesMes = adocoes.filter((a) => a.data >= currentRange.start && a.data <= currentRange.end);
+    const adocoesPrev = adocoes.filter((a) => a.data >= prevRange.start && a.data <= prevRange.end);
 
-    const totalEntradasMes = entradasMes.reduce((sum, e) => sum + toNumber(e.valor), 0);
-    const totalSaidasMes = saidasMes.reduce((sum, s) => sum + toNumber(s.valor), 0);
-    const totalEntradasPrev = entradasPrev.reduce((sum, e) => sum + toNumber(e.valor), 0);
-    const totalSaidasPrev = saidasPrev.reduce((sum, s) => sum + toNumber(s.valor), 0);
+    const totalDoacoesMes = doacoesMes.reduce((sum, d) => sum + toNumber(d.valor), 0);
+    const totalDoacoesPrev = doacoesPrev.reduce((sum, d) => sum + toNumber(d.valor), 0);
+    const totalCustosMes = custosMes.reduce((sum, r) => sum + toNumber(r.custos), 0);
+    const totalCustosPrev = custosPrev.reduce((sum, r) => sum + toNumber(r.custos), 0);
 
-    const saldoAtual = totalEntradasMes - totalSaidasMes;
-    const saldoPrev = totalEntradasPrev - totalSaidasPrev;
-    const saldoTrend = percentChange(saldoAtual, saldoPrev);
-    const entradasTrend = percentChange(totalEntradasMes, totalEntradasPrev);
-    const saidasTrend = percentChange(totalSaidasMes, totalSaidasPrev);
+    const disponiveis = animais.filter((a) => a.status === "DISPONIVEL").length;
+    const emTratamento = animais.filter((a) => a.status === "TRATAMENTO");
 
-    // Vencendo hoje até +7 dias (comparação por data calendário, sem fuso)
-    const contasVencendo = contas.filter((c) => {
-      const key = dateKeyUtc(c.vencimento);
-      return key >= todayKey && key <= in7DaysKey;
-    });
+    const doacoesTrend = percentChange(totalDoacoesMes, totalDoacoesPrev);
+    const adocoesTrend = percentChange(adocoesMes.length, adocoesPrev.length);
 
     const summaryCards = [
       {
-        id: "saldo",
-        label: "Saldo Atual",
-        value: formatCurrency(saldoAtual),
-        trend: `${formatPercent(saldoTrend)} vs mês anterior`,
-        trendDirection: saldoTrend >= 0 ? "up" : "down",
+        id: "doacoes",
+        label: "Doações no mês",
+        value: formatCurrency(totalDoacoesMes),
+        trend: `${formatPercent(doacoesTrend)} vs mês anterior`,
+        trendDirection: doacoesTrend >= 0 ? "up" : "down",
         badge: MONTH_LABELS[currentMonth],
         variant: "primary",
       },
       {
-        id: "entradas",
-        label: "Entradas",
-        value: formatCurrency(totalEntradasMes),
-        trend: formatPercent(entradasTrend),
-        trendDirection: entradasTrend >= 0 ? "up" : "down",
+        id: "animais",
+        label: "Animais no abrigo",
+        value: String(animais.length),
+        trend: `${disponiveis} disponíveis`,
+        trendDirection: "up",
         iconColor: "success",
         variant: "default",
       },
       {
-        id: "saidas",
-        label: "Saídas",
-        value: formatCurrency(totalSaidasMes),
-        trend: formatPercent(saidasTrend),
-        trendDirection: saidasTrend <= 0 ? "up" : "down",
+        id: "adocoes",
+        label: "Adoções no mês",
+        value: String(adocoesMes.length),
+        trend: formatPercent(adocoesTrend),
+        trendDirection: adocoesTrend >= 0 ? "up" : "down",
         iconColor: "warning",
         variant: "default",
       },
       {
-        id: "contas",
-        label: "Contas Vencendo",
-        value: String(contasVencendo.length),
-        subtext: "Próximos 7 dias",
+        id: "tratamento",
+        label: "Em tratamento",
+        value: String(emTratamento.length),
+        subtext: "Acompanhamento veterinário",
         iconColor: "purple",
         variant: "default",
       },
     ];
 
-    // Fluxo de caixa últimos 6 meses (entradas - saídas)
     const cashFlowData = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date(currentYear, currentMonth - i, 1);
       const range = monthRange(d.getFullYear(), d.getMonth());
-      const ent = entradas
-        .filter((e) => e.data >= range.start && e.data <= range.end && e.status === "RECEBIDO")
-        .reduce((sum, e) => sum + toNumber(e.valor), 0);
-      const sai = saidas
-        .filter((s) => s.data >= range.start && s.data <= range.end && s.status === "PAGO")
-        .reduce((sum, s) => sum + toNumber(s.valor), 0);
+      const ent = doacoes
+        .filter((item) => item.data >= range.start && item.data <= range.end)
+        .reduce((sum, item) => sum + toNumber(item.valor), 0);
+      const sai = resgates
+        .filter((item) => item.data >= range.start && item.data <= range.end)
+        .reduce((sum, item) => sum + toNumber(item.custos), 0);
       cashFlowData.push({
         month: MONTH_LABELS[d.getMonth()]!,
-        value: Math.max(0, ent - sai),
+        value: Math.max(0, ent),
         entradas: ent,
         saidas: sai,
       });
     }
 
-    // Despesas por categoria (mês atual)
-    const byCategory = new Map<string, number>();
-    for (const s of saidasMes) {
-      const key = s.categoria || "Outros";
-      byCategory.set(key, (byCategory.get(key) ?? 0) + toNumber(s.valor));
+    const byTipo = new Map<string, number>();
+    for (const d of doacoesMes) {
+      const key = d.tipo === "PIX" ? "PIX" : "Cartão";
+      byTipo.set(key, (byTipo.get(key) ?? 0) + toNumber(d.valor));
     }
-    const expenseCategories = Array.from(byCategory.entries())
+    const expenseCategories = Array.from(byTipo.entries())
       .map(([name, value]) => ({
         name,
         value,
-        color: CATEGORY_COLORS[name] ?? "#6B7280",
+        color: name === "PIX" ? "#F4A261" : "#2F453A",
       }))
       .sort((a, b) => b.value - a.value);
 
-    // Próximos vencimentos
-    const upcomingBills = contasVencendo.slice(0, 5).map((c) => {
-      const key = dateKeyUtc(c.vencimento);
-      const days = daysBetweenKeys(todayKey, key);
-      const dueIn =
-        days === 0 ? "Vence hoje" : days === 1 ? "Vence em 1 dia" : `Vence em ${days} dias`;
-      return {
-        id: c.id,
-        name: c.descricao,
-        dueIn,
-        amount: formatCurrency(toNumber(c.valor)),
-        date: formatDate(key),
-      };
-    });
+    const upcomingBills = emTratamento.slice(0, 5).map((animal) => ({
+      id: animal.id,
+      name: animal.nome,
+      dueIn: animal.especie,
+      amount: "Tratamento",
+      date: formatDate(dateOnly(animal.dataResgate)),
+    }));
 
-    // Últimas movimentações (entradas + saídas)
     const recentTransactions = [
-      ...entradas.map((e) => ({
-        id: `e-${e.id}`,
-        description: e.descricao,
-        category: e.categoria,
-        amount: `+${formatCurrency(toNumber(e.valor))}`,
-        date: formatDate(e.data.toISOString().split("T")[0]!),
+      ...doacoes.map((d) => ({
+        id: `d-${d.id}`,
+        description: d.doador,
+        category: d.tipo === "PIX" ? "Doação PIX" : "Doação Cartão",
+        amount: `+${formatCurrency(toNumber(d.valor))}`,
+        date: formatDate(dateOnly(d.data)),
         type: "income" as const,
-        sortDate: e.data.getTime(),
+        sortDate: d.data.getTime(),
       })),
-      ...saidas.map((s) => ({
-        id: `s-${s.id}`,
-        description: s.descricao,
-        category: s.categoria,
-        amount: `-${formatCurrency(toNumber(s.valor))}`,
-        date: formatDate(s.data.toISOString().split("T")[0]!),
+      ...adocoes.map((a) => ({
+        id: `a-${a.id}`,
+        description: a.animal.nome,
+        category: `Adoção · ${a.adotanteNome}`,
+        amount: "Adotado",
+        date: formatDate(dateOnly(a.data)),
         type: "expense" as const,
-        sortDate: s.data.getTime(),
+        sortDate: a.data.getTime(),
       })),
     ]
       .sort((a, b) => b.sortDate - a.sortDate)
@@ -254,11 +176,17 @@ export async function GET() {
       cashFlowData,
       expenseCategories,
       upcomingBills,
-      upcomingCount: contasVencendo.length,
+      upcomingCount: emTratamento.length,
       recentTransactions,
       recentCount: recentTransactions.length,
+      totais: {
+        doacoesMes: totalDoacoesMes,
+        custosResgateMes: totalCustosMes,
+        custosResgatePrev: totalCustosPrev,
+      },
     });
-  } catch {
+  } catch (error) {
+    console.error("Erro ao carregar dashboard:", error);
     return jsonError("Erro ao carregar dashboard", 500);
   }
 }

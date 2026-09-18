@@ -8,19 +8,19 @@ export interface ConfigSection {
 export const configSections: ConfigSection[] = [
   {
     id: "empresa",
-    title: "Dados da empresa",
-    description: "Informações cadastrais da organização",
+    title: "Dados da ONG",
+    description: "Informações cadastrais da ONG Anjos de Luz",
     fields: [
-      { label: "Razão social", value: "ViaConeta Gestão Financeira Ltda" },
-      { label: "CNPJ", value: "12.345.678/0001-90" },
-      { label: "E-mail", value: "contato@viaconeta.com.br", type: "email" },
+      { label: "Razão social", value: "ONG Anjos de Luz" },
+      { label: "CNPJ", value: "00.000.000/0001-91" },
+      { label: "E-mail", value: "contato@anjosdeluz.org", type: "email" },
       { label: "Telefone", value: "(11) 3456-7890" },
     ],
   },
   {
     id: "usuarios",
     title: "Usuários",
-    description: "Gerencie o acesso ao sistema",
+    description: "Quem tem acesso à gestão financeira da ONG Anjos de Luz",
     fields: [
       { label: "Administradores", value: "2 usuários" },
       { label: "Operadores", value: "5 usuários" },
@@ -42,7 +42,7 @@ export const configSections: ConfigSection[] = [
     title: "Aparência",
     description: "Personalização visual do sistema",
     fields: [
-      { label: "Tema", value: "Dark Premium" },
+      { label: "Tema", value: "Anjos de Luz" },
       { label: "Idioma", value: "Português (BR)" },
       { label: "Formato de data", value: "DD/MM/AAAA" },
     ],
@@ -54,7 +54,7 @@ export const configSections: ConfigSection[] = [
     fields: [
       { label: "Vencimentos", value: "Ativado", type: "toggle" },
       { label: "Relatórios semanais", value: "Ativado", type: "toggle" },
-      { label: "Novas entradas", value: "Desativado", type: "toggle" },
+      { label: "Novas doações", value: "Desativado", type: "toggle" },
     ],
   },
 ];

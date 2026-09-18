@@ -53,12 +53,12 @@ export function DataTable<T extends { id: string | number }>({
               data.map((row) => (
                 <tr
                   key={row.id}
-                  className="border-b border-[var(--color-border)] last:border-b-0 transition-colors hover:bg-white/[0.02]"
+                  className="border-b border-[var(--color-border)] last:border-b-0 transition-colors hover:bg-[var(--color-hover)]"
                 >
                   {columns.map((col) => (
                     <td
                       key={col.key}
-                      className={cn("px-6 py-4 text-sm text-white", col.className)}
+                      className={cn("px-6 py-4 text-sm text-[var(--color-text-primary)]", col.className)}
                     >
                       {col.render(row)}
                     </td>
